@@ -3,23 +3,35 @@ from random import randint
 
 def roulete():
     clock = 0.01
+    c1 = c2 = c3 = "\033[0m"
     while clock < 0.41:
         if clock < 0.2:
             s1 = randint(1, 7)
         else:
-            s1 = f"\033[32m{s1}\033[0m"
+            c1 = f"\033[32m"
         if clock < 0.3:
             s2 = randint(1, 7)
         else:
-            s2 = f"\033[32m{s2}\033[0m"
+            c2 = f"\033[32m"
         if clock < 0.4:
             s3 = randint(1, 7)
         else:
-            s3 = f"\033[32m{s3}\033[0m"
+            c3 = f"\033[32m"
         clock += 0.01
         print("\033[F\033[K", end="")
         print("\033[F\033[K", end="")
-        print(f"ROLETA: \n {s1} : {s2} : {s3} \n", end="\r")
+        print(f"ROLETA: \n {c1}{s1} : {c2}{s2} : {c3}{s3} \n", end="\r")
         sleep(clock)
+    return int(s1), int(s2), int(s3)
 
-roulete()
+def main():
+    valores = roulete()
+    if valores[0] == valores[1] == valores[2]:
+        print(f"\033[32mPARABÉNS! VOCÊ GANHOU! O NÚMERO SORTEADO FOI {valores[0]}!\033[0m")
+    elif valores.count(valores[0]) > 1 or valores.count(valores[1]) > 1 or valores.count(valores[2]) > 1:
+        print(f"\033[33mQUASE! VOCÊ GANHOU METADE! OS NÚMEROS SORTEADOS FORAM {valores[0]}, {valores[1]} e {valores[2]}!\033[0m")
+    else:
+        print(f"\033[31mQUE PENA! VOCÊ PERDEU! OS NÚMEROS SORTEADOS FORAM {valores[0]}, {valores[1]} e {valores[2]}!\033[0m")
+
+if __name__ == "__main__":
+    main()
