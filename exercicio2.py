@@ -17,9 +17,9 @@ def roleta_animacao(opcoes, resultado):
     print(f"*** [ {resultado} ] ***\n")
 
 def main():
-    opcoes = [str(i) for i in range(0, 37)] + ['00']
+    opcoes = [str(i) for i in range(1, 37)] + ['00']
     print("Bem-vindo ao Jogo de Roleta!")
-    print("Opções: 0-36 e 00")
+    print("Opções: 1-36 e 00")
     aposta = input("Em qual número você aposta? ")
 
     if aposta not in opcoes:
