@@ -4,7 +4,7 @@ import os
 
 
 def limpar_tela():
-    os.system('cls')
+    os.system("cls" if os.name == "nt" else "clear")
 
 
 class C:
@@ -71,12 +71,14 @@ def aposta(pontos):
         try:
             valor = int(C.input(msg, C.Y))
         except ValueError:
-            print(f"{C.P("[ ! ] Esse valor é inválido", C.R)}")
+            print(f"{C.P('[ ! ] Esse valor é inválido', C.R)}")
             continue
         if valor > pontos:
             print(f"Acho que você não tem tudo isso, ganhe mais {valor - pontos} que você pode apostar isso.")
         elif valor <= 0:
             print("Você achava mesmo que ia dar certo?")
+        elif valor < (20/100) * pontos:
+            print(f"Vai apostar SÓ {valor} ??? Tu tem {pontos} se liga")
         else:
             break
     return valor
@@ -207,7 +209,15 @@ def main():
                 pontos += valor * soma
         elif escolha == "E":
             pontos -= valor
-            num = int(input("Escolha um número entre 1 e 7: "))
+            while True:
+                try:
+                    num = int(input("Escolha um número entre 1 e 7: "))
+                    if 1 <= num <= 7:
+                        break
+                    print('Acho que você não entendeu a parte em que eu disse "entre 1 a 7"')
+                except ValueError:
+                    print(f"Assim né, eu não conheço o número '{num}', vou acreditar que você tentou escrever por extenso...")
+
             valores = roulete(escolha)
 
             if num not in valores:
@@ -233,6 +243,6 @@ def main():
         else:
             print(f"Você agora tem {pontos} pontos.\n")
 
-
+ 
 if __name__ == "__main__":
     main()
